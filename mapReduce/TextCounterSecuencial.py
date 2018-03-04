@@ -23,12 +23,11 @@ def dirToTxt(dict):
     newFile = open("./resources/test_txt_files/resultSecuencial.txt","w")
     keyList = dict.keys()
     for w in keyList:
-        newFile.write(w +" : " + str(dict[w]))
+        newFile.write(w +" : " + str(dict[w]) + "\n")
     newFile.close()
 
 if __name__  == '__main__':
     #TODO
-    print ("hola")
     dict = {}
     dict = countWords()
     dirToTxt(dict)
