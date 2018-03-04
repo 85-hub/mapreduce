@@ -10,7 +10,7 @@ Documento README con indicaciones básicas para el repositorio de la práctica
 
 ### How do I get set up? ###
 
-* El intérprete de Python que he usado para el proyecto es el 3.5.2
+* El intérprete de Python que he usado para el proyecto es el 3.7.13
 
 ### Contribution guidelines ###
 
