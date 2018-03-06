@@ -30,14 +30,15 @@ class FileManager:
         self.list_lines.append(lines)
 
     def run(self):
-        #threads = []
+        threads = []
         for i in range(0, len(self.text_files)):
             #print "Archivo "+str(i)
             file_txt = open(self.text_files[i], "r")
             read_file = file_txt.read()
             t = threading.Thread(target=self.split_in_lines(read_file))
-            t.start()
-            #threads.append(t)
 
-        """for t in threads:
-            t.join()"""
+            t.start()
+            threads.append(t)
+
+        for t in threads:
+            t.join()
