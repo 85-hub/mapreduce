@@ -26,11 +26,19 @@ class FileManager:
        anadiremos a la lista de lineas del FileManager"""
     def split_in_lines(self, text):
         lines = text.splitlines()
-        #print lines
+        # print lines
         self.list_lines.append(lines)
 
     def run(self):
-        threads = []
+        strText = ""
+        for i in range(0, len(self.text_files)):
+            file_txt = open(self.text_files[i], "r")
+            read_file = file_txt.read()
+            strText += read_file
+
+            #self.list_lines = strText
+            self.split_in_lines(read_file)
+        """threads = []
         for i in range(0, len(self.text_files)):
             #print "Archivo "+str(i)
             file_txt = open(self.text_files[i], "r")
@@ -41,4 +49,4 @@ class FileManager:
             threads.append(t)
 
         for t in threads:
-            t.join()
+            t.join()"""

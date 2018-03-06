@@ -1,9 +1,9 @@
 import threading
-
+import Queue
 
 class Mapper:
-    def __init__(self):
-        self.__line = ""
+    def __init__(self, line):
+        self.__line = line
         self.__wordsMap = []
 
     @property
@@ -28,11 +28,12 @@ class Mapper:
         w = [letter for letter in w if not (letter in ';-?.,!:()')]  # we remove all the simbols, and create a word without symbols
         return ''.join(w).lower()  # we join all the elements from the list and transform every character to lowerCase
 
-    def mapping(self):
-        words = self.line.split()
+    def mapping(self, line_partial_part):
+        words = line_partial_part.split()
         for word in words:
-                word_parsed = self.symbolsFilter(word)
-                self.wordsMap.append((word_parsed, 1))
+            word_parsed = self.symbolsFilter(word)
+            self.wordsMap.append((word_parsed, 1))
+
 
     # wordsDictionary[w[0]].append(w)
     def shuffle(self):
@@ -51,6 +52,9 @@ class Mapper:
         return wordsDictionary
 
     def run(self):
-        t = threading.Thread(target=self.mapping())
-        t.start()
+        for l in self.line:
+            t = threading.Thread(target=self.mapping(l))
+            t.start()
+
+
 

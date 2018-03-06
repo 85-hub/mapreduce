@@ -25,23 +25,36 @@ def main():
        demas clases pasandoles los ficheros necesarios e 
        instanciando las clases del MapReduce"""
 
+    coreNumber = 4
     files = getArgs()
     files_manager = FileManager(files)
     files_manager.run()
-    #print "lista de lineas"
+
+    num_lines = len(files_manager.list_lines[0])+len(files_manager.list_lines[1])
+    partialPart = num_lines/coreNumber
+
+    files_manager.list_lines[0] = files_manager.list_lines[0]+files_manager.list_lines[1]
+
+    list_splitted_lines = [l for l in open(files[0])] + [l for l in open(files[1])]
+
+    mapper = Mapper("")
+    for i in range(partialPart, num_lines+1, partialPart):
+        mapper.line = list_splitted_lines[i-partialPart:i]
+        mapper.run()
+    #print files_manager.list_lines[0:partialPart]
+    #[files_manager.list_lines[i:i + partialPart] for i in range(0, len(files_manager.list_lines), partialPart)]
     #print files_manager.list_lines
 
+    #print files_manager.list_lines[1]
 
-    mapper = Mapper()
-    mapMapped = []
-    for text in files_manager.list_lines:
-        for line_text in text:
-            mapper.line = line_text
-            mapper.run()
-            #mapper.mapping()
+    """for text in files_manager.list_lines:
+        #for line_text in text:
+        #print line_text
+        mapper = Mapper(line_text)
 
-
-    #print mapper.wordsMap
+        #mapper.line = line_text
+        mapper.run()
+        #mapper.mapping()"""
 
     shuffleDict = mapper.shuffle()
 
