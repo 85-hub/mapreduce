@@ -1,6 +1,3 @@
-import threading
-import Queue
-
 class Mapper:
     def __init__(self, line):
         self.__line = line
@@ -29,32 +26,27 @@ class Mapper:
         return ''.join(w).lower()  # we join all the elements from the list and transform every character to lowerCase
 
     def mapping(self, line_partial_part):
-        words = line_partial_part.split()
-        for word in words:
-            word_parsed = self.symbolsFilter(word)
-            self.wordsMap.append((word_parsed, 1))
+        for line in line_partial_part:
+            words = line.split()
+            for word in words:
+                word_parsed = self.symbolsFilter(word)
+                self.wordsMap.append((word_parsed, 1))
 
-
-    # wordsDictionary[w[0]].append(w)
-    def shuffle(self):
+    @staticmethod
+    def shuffle(listMapped):
         wordsDictionary = {}
-        #self.wordsMap = sorted(self.wordsMap, key=lambda tup: tup[0])
-        #print "selfmap"
-        #print self.wordsMap
-        #utilizando diccionario
-        for mapItem in self.wordsMap:
-            if wordsDictionary.has_key(mapItem[0]):
-                wordsDictionary[mapItem[0]].append(mapItem)
+
+        for line in listMapped:
+            if wordsDictionary.has_key(line[0]):
+                wordsDictionary[line[0]].append(line)
             else:
-                wordsDictionary[mapItem[0]] = []
-                wordsDictionary[mapItem[0]].append(mapItem)
+                wordsDictionary[line[0]] = []
+                wordsDictionary[line[0]].append(line)
 
         return wordsDictionary
 
-    def run(self):
-        for l in self.line:
-            t = threading.Thread(target=self.mapping(l))
-            t.start()
+
+
 
 
 

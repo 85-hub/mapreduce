@@ -1,5 +1,3 @@
-import threading
-
 class FileManager:
 
     def __init__(self, file_text):
@@ -26,27 +24,12 @@ class FileManager:
        anadiremos a la lista de lineas del FileManager"""
     def split_in_lines(self, text):
         lines = text.splitlines()
-        # print lines
         self.list_lines.append(lines)
 
     def run(self):
-        strText = ""
-        for i in range(0, len(self.text_files)):
-            file_txt = open(self.text_files[i], "r")
+        lines_files = []
+        for file in self.text_files:
+            file_txt = open(file, "r")
             read_file = file_txt.read()
-            strText += read_file
-
-            #self.list_lines = strText
-            self.split_in_lines(read_file)
-        """threads = []
-        for i in range(0, len(self.text_files)):
-            #print "Archivo "+str(i)
-            file_txt = open(self.text_files[i], "r")
-            read_file = file_txt.read()
-            t = threading.Thread(target=self.split_in_lines(read_file))
-
-            t.start()
-            threads.append(t)
-
-        for t in threads:
-            t.join()"""
+            lines_files += read_file.splitlines()
+        return lines_files
