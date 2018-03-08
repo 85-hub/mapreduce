@@ -20,13 +20,10 @@ class FileManager:
     def list_lines(self, value):
         self.__list_lines = value
 
-    """Funcion donde separaremos por lineas el txt, y lo 
-       anadiremos a la lista de lineas del FileManager"""
-    def split_in_lines(self, text):
-        lines = text.splitlines()
-        self.list_lines.append(lines)
 
-    def run(self):
+    """Funcion donde separaremos por lineas el txt, y lo 
+        anadiremos a la lista de lineas del FileManager"""
+    def split_in_lines(self):
         lines_files = []
         for file in self.text_files:
             file_txt = open(file, "r")

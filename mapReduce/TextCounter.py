@@ -31,18 +31,19 @@ def main():
     files = getArgs()
 
     file_manager = FileManager(files)
-    lines_files = file_manager.run()
+    lines_files = file_manager.split_in_lines()
 
-    num_files = len(lines_files)
-    partialPart = num_files/num_cores
-    difference = num_files - (partialPart * num_cores)
+
+    num_lines = len(lines_files)
+    partialPart = num_lines/num_cores
+    difference = num_lines - (partialPart * num_cores)
 
     mapper = Mapper("")
-    for i in range(partialPart, (num_files-partialPart) + 1, partialPart):
+    for i in range(partialPart, (num_lines-partialPart) + 1, partialPart):
         t = threading.Thread(mapper.mapping(lines_files[i-partialPart:i]))
         t.start()
 
-    t = threading.Thread(mapper.mapping(lines_files[num_files - (partialPart+difference):num_files]))
+    t = threading.Thread(mapper.mapping(lines_files[num_lines - (partialPart+difference):num_lines]))
     t.start()
 
     shuffleDict = mapper.shuffle(mapper.wordsMap)
